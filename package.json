@@ -1,6 +1,6 @@
 {
   "name": "@syvita/storm",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "CLI authenticator for Stacks CLI apps",
   "main": "index.js",
   "repository": {
@@ -8,10 +8,11 @@
     "url": "https://github.com/syvita/storm.git"
   },
   "scripts": {
-    "preinstall": "pnpm build",
+    "preinstall": "pnpm build:prod",
     "format": "prettier --write . --loglevel silent",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "pnpm format && esbuild index.js --bundle --platform=node --external:keytar --format=cjs --outdir=build",
+    "build:prod": "esbuild index.js --bundle --minify --platform=node --external:keytar --format=cjs --outdir=build",
     "start": "pnpm build && node build/index.js",
     "i2p": "pnpm build && pnpm i -g",
     "launch": "pnpm publish --access=public"
@@ -37,7 +38,8 @@
     "search-array": "^1.3.2",
     "string-crypto": "^2.0.2",
     "table": "^6.7.3",
-    "which": "^2.0.2"
+    "which": "^2.0.2",
+    "esbuild": "^0.13.15"
   },
   "bin": {
     "storm": "build/index.js"
