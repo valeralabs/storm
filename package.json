@@ -1,8 +1,12 @@
 {
   "name": "@syvita/storm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI authenticator for Stacks CLI apps",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syvita/storm.git"
+  },
   "scripts": {
     "preinstall": "pnpm build",
     "test": "echo \"Error: no test specified\" && exit 1",
