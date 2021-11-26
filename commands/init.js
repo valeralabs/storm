@@ -3,16 +3,22 @@ import ora from 'ora'
 import chalk from 'chalk'
 import prompts from 'prompts'
 import bip39 from 'bip39'
-import { createSecretKey, getSecretKey, importSecretKey } from '../lib/vault'
+import {
+  createSecretKey,
+  getSecretKey,
+  importSecretKey,
+  secretKeyExists,
+} from '../lib/vault'
 const log = console.log
 
 export default async function init() {
-  const key = await getSecretKey()
+  const key = await secretKeyExists()
 
   if (key) {
     log(
       chalk.red(
-        '\nStorm is already setup. If you want to change the key, run `storm reset`\n'
+        '\nStorm is already setup. If you want to change the key, run `storm reset`\n' +
+          "If you want to change Storm's settings, run `storm config`\n"
       )
     )
     return process.exit(0)

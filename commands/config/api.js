@@ -12,11 +12,11 @@ export default async function configApi() {
   // log the current api with individually coloured protocol, host and port
   console.log(
     `Current API:`,
-    chalk.magenta(config.get('api.protocol')) +
+    chalk.magenta(config.get('api.protocol', 'https')) +
       `://` +
-      chalk.magenta(config.get('api.host')) +
+      chalk.magenta(config.get('api.host', 'mainnet.syvita.org')) +
       `:` +
-      chalk.magenta(config.get('api.port'))
+      chalk.magenta(config.get('api.port', 443))
   )
 
   await prompts([
