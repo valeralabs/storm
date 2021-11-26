@@ -1,6 +1,6 @@
 {
   "name": "@syvita/storm",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "CLI authenticator for Stacks CLI apps",
   "main": "index.js",
   "repository": {
@@ -28,18 +28,19 @@
     "chalk-animation": "^1.6.0",
     "commander": "^8.3.0",
     "conf": "^10.1.0",
+    "esbuild": "^0.13.15",
     "hash-wasm": "^4.9.0",
     "keytar": "^7.7.0",
     "micro-stacks": "^0.1.3",
     "node-fetch": "^3.1.0",
     "ora": "^6.0.1",
+    "pnpm": "^6.23.2",
     "prompts": "^2.4.2",
     "ripemd160-js": "^1.2.0",
     "search-array": "^1.3.2",
     "string-crypto": "^2.0.2",
     "table": "^6.7.3",
-    "which": "^2.0.2",
-    "esbuild": "^0.13.15"
+    "which": "^2.0.2"
   },
   "bin": {
     "storm": "build/index.js"
