@@ -1,44 +1,44 @@
-import prompts from "prompts";
-import { autosearch } from "../lib/autosearch";
-import configApi from "./config/api";
-import changePassword from "./config/password";
+import prompts from 'prompts'
+import { autosearch } from '../lib/autosearch'
+import configApi from './config/api'
+import changePassword from './config/password'
 
 export async function config() {
   const { select } = await prompts({
-    type: "autocomplete",
-    name: "select",
-    message: "Configure Storm options",
+    type: 'autocomplete',
+    name: 'select',
+    message: 'Configure Storm options',
     choices: [
       {
-        title: "Set API server",
+        title: 'Set API server',
         description:
-          "Change the API used to fetch transactions and account data",
-        value: "api",
+          'Change the API used to fetch transactions and account data',
+        value: 'api',
       },
       {
-        title: "Set Stacks node",
-        description: "Change the Stacks node used to broadcast transactions",
-        value: "node",
+        title: 'Set Stacks node',
+        description: 'Change the Stacks node used to broadcast transactions',
+        value: 'node',
       },
       {
-        title: "Change password",
-        description: "Change your encryption password",
-        value: "password",
-      }
+        title: 'Change password',
+        description: 'Change your encryption password',
+        value: 'password',
+      },
     ],
     suggest: async (input, choices) => await autosearch(input, choices),
-  });
+  })
   switch (select) {
-    case "api":
-      await configApi();
-      break;
-    case "node":
-      console.log("node");
-      break;
-    case "password":
+    case 'api':
+      await configApi()
+      break
+    case 'node':
+      console.log('node')
+      break
+    case 'password':
       await changePassword()
-      break;
+      break
     default:
-      break;
+      break
   }
 }
