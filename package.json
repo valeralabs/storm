@@ -9,8 +9,9 @@
   },
   "scripts": {
     "preinstall": "pnpm build",
+    "format": "prettier --write . --loglevel silent",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild index.js --bundle --platform=node --external:keytar --format=cjs --outdir=build",
+    "build": "pnpm format && esbuild index.js --bundle --platform=node --external:keytar --format=cjs --outdir=build",
     "start": "pnpm build && node build/index.js",
     "i2p": "pnpm build && pnpm i -g",
     "launch": "pnpm publish --access=public"
@@ -42,6 +43,7 @@
     "storm": "build/index.js"
   },
   "devDependencies": {
-    "esbuild": "^0.13.15"
+    "esbuild": "^0.13.15",
+    "prettier": "^2.5.0"
   }
 }
