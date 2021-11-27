@@ -40,7 +40,7 @@ export async function reset() {
     spinner.succeed('Settings deleted')
   }
 
-  if (!(resetSettings && resetKey)) {
+  if (!resetSettings && !resetKey) {
     console.log(chalk.red('Cancelled'))
   }
 }
