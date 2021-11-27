@@ -5,6 +5,7 @@ import { config } from './commands/config'
 import { signMsg } from './commands/wallet'
 import { reset } from './commands/reset'
 import key from './commands/key'
+import { getAccounts } from './commands/accounts'
 
 program.command('key').description('Get your Key').action(key)
 
@@ -21,5 +22,10 @@ program
   .command('sign')
   .description('Sign a message from one of your Stacks accounts')
   .action(signMsg)
+
+program
+  .command('accounts')
+  .description('Find one of your Stacks accounts')
+  .action(getAccounts)
 
 program.parse()
