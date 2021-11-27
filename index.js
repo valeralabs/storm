@@ -6,6 +6,7 @@ import { signMsg } from './commands/wallet'
 import { reset } from './commands/reset'
 import key from './commands/key'
 import { getAccounts } from './commands/accounts'
+import { searchTxs } from './commands/tx'
 
 program.command('key').description('Get your Key').action(key)
 
@@ -27,5 +28,10 @@ program
   .command('accounts')
   .description('Find one of your Stacks accounts')
   .action(getAccounts)
+
+program
+  .command('tx search')
+  .description('Search your Stacks accounts for transactions')
+  .action(searchTxs)
 
 program.parse()
