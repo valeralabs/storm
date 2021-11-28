@@ -46,10 +46,8 @@ export async function signMsg() {
   })
 
   const hasher = ora('Hashing message').start()
-  const msgHash = await blake3Hash(msg).then(hash => {
-    hasher.succeed(`Hashed message: ${hash}`)
-    return hash
-  })
+  const hash = blake3Hash(msg)
+  hasher.succeed(`Hashed message: ${hash}`)
 
   const signer = ora('Signing message').start()
 

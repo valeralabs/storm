@@ -20,33 +20,28 @@
   "author": "Asteria <asteria@syvita.org>",
   "license": "ISC",
   "dependencies": {
-    "@noble/secp256k1": "^1.3.0",
-    "@stacks/wallet-sdk": "^2.0.1",
-    "bip39": "^3.0.4",
-    "c32check": "^1.1.3",
-    "chalk": "^4.1.2",
-    "chalk-animation": "^1.6.0",
-    "commander": "^8.3.0",
-    "conf": "^10.1.0",
-    "esbuild": "^0.13.15",
-    "hash-wasm": "^4.9.0",
-    "keytar": "^7.7.0",
-    "micro-stacks": "^0.1.3",
-    "node-fetch": "^3.1.0",
-    "ora": "^6.0.1",
-    "pnpm": "^6.23.2",
-    "prompts": "^2.4.2",
-    "ripemd160-js": "^1.2.0",
-    "search-array": "^1.3.2",
-    "string-crypto": "^2.0.2",
-    "table": "^6.7.3",
-    "which": "^2.0.2"
+    "@noble/hashes": "0.4.1",
+    "@noble/secp256k1": "1.3.0",
+    "@stacks/wallet-sdk": "2.0.1",
+    "chalk": "4.1.2",
+    "chalk-animation": "1.6.0",
+    "commander": "8.3.0",
+    "conf": "10.1.0",
+    "keytar": "7.7.0",
+    "micro-stacks": "0.1.3",
+    "node-fetch": "3.1.0",
+    "ora": "6.0.1",
+    "prompts": "2.4.2",
+    "search-array": "1.3.2",
+    "table": "6.7.3",
+    "which": "2.0.2"
   },
   "bin": {
     "storm": "build/index.js"
   },
   "devDependencies": {
-    "esbuild": "^0.13.15",
-    "prettier": "^2.5.0"
+    "esbuild": "0.13.15",
+    "prettier": "2.5.0",
+    "pnpm": "6.23.2"
   }
 }
