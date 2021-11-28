@@ -55,7 +55,7 @@ export async function signMsg() {
     account => private2address(account.stxPrivateKey, true) === address
   )
   const signingKey = getSigningKey(account.stxPrivateKey)
-  const signature = await signSecp(signingKey, msgHash)
+  const signature = await signSecp(signingKey, hash)
     .then(signature => {
       signer.succeed(`Signed message: ${signature}`)
       return signature
@@ -66,16 +66,14 @@ export async function signMsg() {
 
   const verifier = ora('Verifying signature').start()
 
-  const verification = await verifySecpAddress(
-    address,
-    msgHash,
-    signature
-  ).then(verified => {
-    if (verified) {
-      verifier.succeed(`Verified signature`)
-    } else {
-      verifier.fail(`Failed to verify signature`)
+  const verification = await verifySecpAddress(address, hash, signature).then(
+    verified => {
+      if (verified) {
+        verifier.succeed(`Verified signature`)
+      } else {
+        verifier.fail(`Failed to verify signature`)
+      }
+      return verified
     }
-    return verified
-  })
+  )
 }
