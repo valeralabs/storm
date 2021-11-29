@@ -1,0 +1,9 @@
+{
+  "actions": {
+    "build": {
+      "enabled": true,
+      "script": "pnpm build"
+    }
+  },
+  "identifier": "6A22A119-9287-45EC-9D85-01F21CF2F914"
+}
