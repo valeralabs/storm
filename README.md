@@ -28,4 +28,10 @@ pnpm i -g esbuild @syvita/storm
 storm init
 ```
 
+5. Run storm as `storm` to see the available commands.
+   
+```sh
+storm
+```
+
 **NOTE:** Storm is tested to work with Node.js 16 and nothing else, yet.
