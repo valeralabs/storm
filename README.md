@@ -7,20 +7,25 @@
 Storm is built in Node.js and is available on
 [npm](https://npmjs.com/package/@syvita/storm).
 
-You can install it with your favourite package manager. We prefer
-[PNPM](https://pnpm/io) and use it in development, but you can also use
-[Yarn](https://yarnpkg.com/) or [NPM](https://www.npmjs.com/).
+You can install it with your favourite package manager.
 
-**NOTE:** Storm is tested to work with Node.js 16
-
-```sh
-pnpm i -g @syvita/storm
-```
+1. Install Node.js 16 from [here](https://nodejs.org/en/download/).
+2. Install PNPM like so:
 
 ```sh
-yarn global add @syvita/storm
+curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 ```
 
+3. Install required dependencies and storm itself:
+
 ```sh
-npm i -g @syvita/storm
+pnpm i -g esbuild @syvita/storm
 ```
+
+4. Initialize storm by running and either set it up with a new key, or use one you already use in the Hiro Web Wallet:
+
+```sh
+storm init
+```
+
+**NOTE:** Storm is tested to work with Node.js 16 and nothing else, yet.
