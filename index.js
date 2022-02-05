@@ -7,15 +7,27 @@ import { reset } from './commands/reset'
 import key from './commands/key'
 import { getAccounts } from './commands/accounts'
 import { searchTxs } from './commands/tx'
+import { getExchangeTransfers } from './commands/taxes'
+import { ftl } from './commands/fractal'
 
 program.command('key').description('Get your Key').action(key)
 
 program.command('init').description('Set up Storm').action(init)
 
 program
+  .command('ftl')
+  .description('Interact with the Fractal Protocol for NFTs')
+  .action(ftl)
+
+program
   .command('reset')
   .description('Reset your Storm Key & settings')
   .action(reset)
+
+// program
+//   .command('tax')
+//   .description('Reset your Storm Key & settings')
+//   .action(getExchangeTransfers)
 
 program.command('config').description('Configure Storm').action(config)
 

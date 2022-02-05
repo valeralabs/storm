@@ -1,6 +1,6 @@
 {
   "name": "@syvita/storm",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "CLI authenticator for Stacks CLI apps",
   "main": "index.js",
   "repository": {
@@ -11,10 +11,10 @@
     "preinstall": "pnpm build:prod",
     "format": "prettier --write . --loglevel silent",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpm format && esbuild index.js --bundle --platform=node --external:keytar --format=cjs --outdir=build",
-    "build:prod": "esbuild index.js --bundle --minify --platform=node --external:keytar --format=cjs --outdir=build",
+    "build": "pnpm format && esbuild index.js --bundle --sourcemap --platform=node --external:keytar --external:micro-stacks --format=cjs --outdir=build",
+    "build:prod": "esbuild index.js --bundle --minify --platform=node --external:keytar --external:micro-stacks --format=cjs --outdir=build",
     "start": "pnpm build && node build/index.js",
-    "i2p": "pnpm build && pnpm i -g",
+    "i2p": "pnpm build:prod && pnpm i -g",
     "launch": "pnpm publish --access=public"
   },
   "author": "Asteria <asteria@syvita.org>",
