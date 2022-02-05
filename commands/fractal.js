@@ -115,8 +115,6 @@ async function fractalize(account) {
     nft => nft.assetIdentifier === collection && nft.value === nftValue
   )
 
-  console.log(selectedNft)
-
   const { fractalCount } = await prompts({
     type: 'number',
     name: 'fractalCount',
