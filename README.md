@@ -29,7 +29,7 @@ storm init
 ```
 
 5. Run storm as `storm` to see the available commands.
-   
+
 ```sh
 storm
 ```

@@ -15,9 +15,10 @@ import {
   makeStandardNonFungiblePostCondition,
   NonFungibleConditionCode,
 } from 'micro-stacks/transactions'
+import { getFractalizedNfts } from '../lib/fractal/get-fractalized-nfts'
 
 const FRACTAL_CONTRACT_ADDRESS = 'SP343J7DNE122AVCSC4HEK4MF871PW470ZSXJ5K66'
-const FRACTAL_CONTRACT_NAME = `fractal-v1-7`
+const FRACTAL_CONTRACT_NAME = `fractal-v1-8`
 
 export async function ftl() {
   const account = await chooseAccount()
@@ -166,10 +167,10 @@ async function fractalize(account) {
 
 async function transfer(account) {}
 
-async function defractalize(account) {}
+async function defractalize(account) {
+  //const spinner = ora('Loading fractalized NFTs').start()
 
-function getAbstractedTxid(txid) {
-  return txid.slice(0, 4) + '...' + txid.slice(-4)
+  await getFractalizedNfts(account)
 }
 
 async function getDescription() {
