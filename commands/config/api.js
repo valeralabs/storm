@@ -33,7 +33,7 @@ export default async function configApi() {
     {
       type: 'text',
       name: 'host',
-      message: 'Enter the bvAPI server',
+      message: 'Enter the API server host/IP',
       initial: config.get('api.host', 'mainnet.syvita.org'),
     },
     {
@@ -61,4 +61,26 @@ export default async function configApi() {
         }
       })
   })
+}
+
+export async function connectivityCheck() {
+  const spinner = ora('Checking connectivity').start()
+  const [protocol, host, port] = [
+    config.get('api.protocol', 'https'),
+    config.get('api.host', 'mainnet.syvita.org'),
+    config.get('api.port', 443),
+  ]
+  return await checkApi(protocol, host, port)
+    .catch(err => {
+      spinner.fail(`${err}`)
+    })
+    .then(working => {
+      if (working) {
+        spinner.succeed('API online')
+        return working
+      } else {
+        spinner.fail('API offline')
+        return working
+      }
+    })
 }

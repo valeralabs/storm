@@ -2,13 +2,8 @@ import animation from 'chalk-animation'
 import ora from 'ora'
 import chalk from 'chalk'
 import prompts from 'prompts'
-import bip39 from 'bip39'
-import {
-  createSecretKey,
-  getSecretKey,
-  importSecretKey,
-  secretKeyExists,
-} from '../lib/vault'
+import { validateMnemonic } from 'micro-stacks/bip39'
+import { createSecretKey, importSecretKey, secretKeyExists } from '../lib/vault'
 const log = console.log
 
 export default async function init() {
@@ -85,7 +80,7 @@ export default async function init() {
           name: 'key',
           message: 'Enter your Secret Key',
           validate: key =>
-            !bip39.validateMnemonic(key) ? 'Invalid Secret Key' : true,
+            !validateMnemonic(key.trim()) ? 'Invalid Secret Key' : true,
         },
         {
           type: 'password',

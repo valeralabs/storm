@@ -1,6 +1,6 @@
 {
   "name": "@syvita/storm",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "CLI authenticator for Stacks CLI apps",
   "main": "index.js",
   "repository": {

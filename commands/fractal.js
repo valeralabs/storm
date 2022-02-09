@@ -2,12 +2,8 @@ import prompts from 'prompts'
 import { autosearch } from '../lib/autosearch'
 import { chooseAccount } from '../lib/accounts'
 import chalk from 'chalk'
-import ora from 'ora'
-import {
-  supportedContracts,
-  collectionDisplayNames,
-} from '../lib/fractal/supported-contracts'
-import { getNfts } from '../lib/api'
+import { getDisplayName } from '../lib/fractal/utils'
+
 import { makeSmartContractCall } from '../lib/transactions'
 import { contractPrincipalCV, uintCV } from 'micro-stacks/clarity'
 import {
@@ -16,6 +12,7 @@ import {
   NonFungibleConditionCode,
 } from 'micro-stacks/transactions'
 import { getFractalizedNfts } from '../lib/fractal/get-fractalized-nfts'
+import { selectNftFromBalance } from '../lib/fractal/select'
 
 const FRACTAL_CONTRACT_ADDRESS = 'SP343J7DNE122AVCSC4HEK4MF871PW470ZSXJ5K66'
 const FRACTAL_CONTRACT_NAME = `fractal-v1-8`
@@ -63,58 +60,7 @@ export async function ftl() {
 }
 
 async function fractalize(account) {
-  const spinner = ora('Loading NFTs').start()
-
-  const userNfts = await getNfts(account.address)
-
-  const nfts = userNfts.filter(nft =>
-    supportedContracts.includes(nft.assetIdentifier.split('::')[0])
-  )
-
-  const collectionChoices = nfts
-    .map(nft => {
-      return {
-        title: getDisplayName(nft),
-        value: nft.assetIdentifier,
-        description: nft.assetIdentifier,
-      }
-    })
-    .filter((v, i, a) => a.findIndex(t => t.title === v.title) === i)
-
-  spinner.succeed('NFTs loaded')
-
-  const { collection } = await prompts({
-    type: 'autocomplete',
-    name: 'collection',
-    message: 'Pick a collection',
-    choices: collectionChoices,
-    suggest: async (input, choices) => await autosearch(input, choices),
-  }).catch(err => {
-    console.log(chalk.red(err.message))
-    process.exit(1)
-  })
-
-  const { nftValue } = await prompts({
-    type: 'autocomplete',
-    name: 'nftValue',
-    message: 'Pick an NFT',
-    choices: nfts
-      .filter(nft => nft.assetIdentifier === collection)
-      .map(nft => {
-        return {
-          title: `#${nft.value}`,
-          ...nft,
-        }
-      }),
-    suggest: async (input, choices) => await autosearch(input, choices),
-  }).catch(err => {
-    console.log(chalk.red(err.message))
-    process.exit(1)
-  })
-
-  const selectedNft = nfts.find(
-    nft => nft.assetIdentifier === collection && nft.value === nftValue
-  )
+  const selectedNft = await selectNftFromBalance(account)
 
   const { fractalCount } = await prompts({
     type: 'number',
@@ -138,17 +84,20 @@ async function fractalize(account) {
   )
 
   const standardNonFungiblePostCondition = makeStandardNonFungiblePostCondition(
-    account.address,
-    NonFungibleConditionCode.DoesNotOwn,
+    account.address, // user address...
+    NonFungibleConditionCode.DoesNotOwn, // does not own this nft...
     createAssetInfo(
-      selectedNft.assetIdentifier.split('.')[0],
-      selectedNft.assetIdentifier.split('.')[1].split('::')[0],
-      selectedNft.assetIdentifier.split('::')[1]
+      selectedNft.assetIdentifier.split('.')[0], // contract address
+      selectedNft.assetIdentifier.split('.')[1].split('::')[0], // contract name
+      selectedNft.assetIdentifier.split('::')[1] // asset identifier in contract
     ),
-    uintCV(Number(selectedNft.value))
+    uintCV(Number(selectedNft.value)) // nft sip9 id
+    // ... after this transaction is complete, otherwise abort
   )
 
-  const tx = await makeSmartContractCall(
+  // a wrapper around microstacks that renders status and broadcast etc as it
+  // makes the transaction
+  await makeSmartContractCall(
     account,
     FRACTAL_CONTRACT_ADDRESS,
     FRACTAL_CONTRACT_NAME,
@@ -171,18 +120,4 @@ async function defractalize(account) {
   //const spinner = ora('Loading fractalized NFTs').start()
 
   await getFractalizedNfts(account)
-}
-
-async function getDescription() {
-  const res = await fetch(
-    `https://mainnet.syvita.org/extended/v1/block?limit=1`
-  )
-  return res.json.total
-}
-
-function getDisplayName(nft) {
-  return (
-    collectionDisplayNames[nft.assetIdentifier.split('::')[0]] ||
-    nft.assetIdentifier.split('::')[1]
-  )
 }
